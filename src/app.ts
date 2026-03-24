@@ -9,6 +9,10 @@ import errorHandler from "./middlewares/errorHandler.js";
 import notFound from "./middlewares/notFound.js";
 
 const app = express();
+
+app.set("view engine", "ejs");
+app.set("views", import.meta.dirname + "/../views");
+
 app.use(router);
 app.use(notFound);
 app.use(errorHandler);
