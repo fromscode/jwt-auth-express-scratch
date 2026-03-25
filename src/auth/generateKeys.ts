@@ -13,13 +13,13 @@ crypto.generateKeyPair(
       type: "pkcs8",
       format: "pem",
       cipher: "aes-256-cbc",
-      passphrase: "top secret",
+      passphrase: process.env.passphrase,
     },
   },
   (err, publicKey, privateKey) => {
     if (err) console.error(err);
 
-    const fileName = import.meta.dirname + "/../.env";
+    const fileName = import.meta.dirname + "/../../.env";
 
     const publicKeyB64URL = Buffer.from(publicKey).toString("base64url");
     const privateKeyB64URL = Buffer.from(publicKey).toString("base64url");

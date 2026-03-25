@@ -7,6 +7,13 @@ async function saveUser(username: string, password: string) {
   ]);
 }
 
+async function getUserByUsername(username: string) {
+  return (
+    await pool.query("SELECT * FROM users WHERE username = $1", [username])
+  ).rows[0];
+}
+
 export default {
   saveUser,
+  getUserByUsername,
 };
