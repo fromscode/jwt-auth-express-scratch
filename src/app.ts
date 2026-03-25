@@ -13,6 +13,8 @@ const app = express();
 app.set("view engine", "ejs");
 app.set("views", import.meta.dirname + "/../views");
 
+app.use(express.urlencoded({ extended: true }));
+
 app.use(router);
 app.use(notFound);
 app.use(errorHandler);

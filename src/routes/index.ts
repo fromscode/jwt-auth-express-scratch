@@ -8,6 +8,6 @@ router.get("/", controller.homePage);
 router.get("/login", controller.getLogin);
 router.get("/register", controller.getRegister);
 router.post("/login", controller.postLogin);
-router.post("/regiser", controller.postRegister);
+router.post("/register", controller.postRegister);
 
 export default router;
