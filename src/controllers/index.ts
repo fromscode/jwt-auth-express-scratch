@@ -1,4 +1,6 @@
 import type { Request, Response } from "express";
+import bcrypt from "bcrypt";
+
 import queries from "../db/queries.js";
 
 function homePage(req: Request, res: Response) {
@@ -17,7 +19,8 @@ async function postLogin(req: Request, res: Response) {}
 
 async function postRegister(req: Request, res: Response) {
   const { username, password } = req.body;
-  await queries.saveUser(username, password);
+  const hashedPass = await bcrypt.hash(password, 10);
+  await queries.saveUser(username, hashedPass);
   res.redirect("/");
 }
 
