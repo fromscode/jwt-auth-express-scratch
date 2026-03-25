@@ -24,10 +24,16 @@ async function postRegister(req: Request, res: Response) {
   res.redirect("/");
 }
 
+async function getDashboard(req: Request, res: Response) {}
+
+async function getProfile(req: Request, res: Response) {}
+
 export default {
   homePage,
   getLogin,
   getRegister,
   postLogin,
   postRegister,
+  getDashboard,
+  getProfile,
 };
