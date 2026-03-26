@@ -22,7 +22,7 @@ crypto.generateKeyPair(
     const fileName = import.meta.dirname + "/../../.env";
 
     const publicKeyB64URL = Buffer.from(publicKey).toString("base64url");
-    const privateKeyB64URL = Buffer.from(publicKey).toString("base64url");
+    const privateKeyB64URL = Buffer.from(privateKey).toString("base64url");
 
     const dataToWrite = `\nPUBLIC_KEY="${publicKeyB64URL}"\nPRIVATE_KEY="${privateKeyB64URL}"`;
 

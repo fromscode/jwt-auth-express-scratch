@@ -1,12 +1,10 @@
-import express, {
-  type NextFunction,
-  type Request,
-  type Response,
-} from "express";
+import express from "express";
 
 import router from "./routes/index.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import notFound from "./middlewares/notFound.js";
+
+import cookieParser from "cookie-parser";
 
 const app = express();
 
@@ -14,6 +12,8 @@ app.set("view engine", "ejs");
 app.set("views", import.meta.dirname + "/../views");
 
 app.use(express.urlencoded({ extended: true }));
+
+app.use(cookieParser());
 
 app.use(router);
 app.use(notFound);

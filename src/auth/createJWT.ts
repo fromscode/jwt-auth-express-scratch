@@ -1,4 +1,4 @@
-import { createSign, privateDecrypt } from "node:crypto";
+import { createSign } from "node:crypto";
 
 const header = {
   alg: "RS256",
@@ -25,9 +25,12 @@ export default async function (properties: any) {
     "base64url",
   );
   const sign = createSign("SHA256");
-  sign.update(`${headerb64url}${payloadb64url}`);
+  sign.update(`${headerb64url}.${payloadb64url}`);
   const signatureB64url = sign.sign(
-    { key: privateKey, passphrase: passphrase },
+    {
+      key: Buffer.from(privateKey, "base64url").toString("utf-8"),
+      passphrase: passphrase,
+    },
     "base64url",
   );
 

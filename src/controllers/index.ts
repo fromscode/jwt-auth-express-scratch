@@ -2,7 +2,8 @@ import type { Request, Response } from "express";
 import bcrypt from "bcrypt";
 
 import queries from "../db/queries.js";
-import createJWT from "../middlewares/createJWT.js";
+import createJWT from "../auth/createJWT.js";
+import decodeJWT from "../auth/decodeJWT.js";
 
 function homePage(req: Request, res: Response) {
   res.render("index");
@@ -27,6 +28,12 @@ async function postLogin(req: Request, res: Response) {
 
   const jwt = await createJWT({ sub: String(user.id), name: user.username });
 
+  res.cookie("token", jwt, {
+    httpOnly: true,
+    secure: true,
+    maxAge: 1000 * 60 * 60 * 24,
+  });
+
   /* TODO: Figure out a way to save the cookie on server side,
   Do not user res.render() as it breaks the PRG pattern
   The solution is probably to use httponly cookie to send the token via a redirect, and the in that controller extract the 
@@ -42,7 +49,16 @@ async function postRegister(req: Request, res: Response) {
   res.redirect("/");
 }
 
-async function getDashboard(req: Request, res: Response) {}
+async function getDashboard(req: Request, res: Response) {
+  const user = decodeJWT(req.cookies.token);
+
+  if (!user) {
+    res.redirect("/login");
+    return;
+  }
+
+  res.send(`Hello ${user.name}`);
+}
 
 async function getProfile(req: Request, res: Response) {}
 
