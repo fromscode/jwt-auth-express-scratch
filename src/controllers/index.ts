@@ -34,11 +34,6 @@ async function postLogin(req: Request, res: Response) {
     maxAge: 1000 * 60 * 60 * 24,
   });
 
-  /* TODO: Figure out a way to save the cookie on server side,
-  Do not user res.render() as it breaks the PRG pattern
-  The solution is probably to use httponly cookie to send the token via a redirect, and the in that controller extract the 
-  token from the cookie and send it to the client */
-
   res.redirect("dashboard");
 }
 
@@ -49,18 +44,15 @@ async function postRegister(req: Request, res: Response) {
   res.redirect("/");
 }
 
-async function getDashboard(req: Request, res: Response) {
-  const user = decodeJWT(req.cookies.token);
-
-  if (!user) {
-    res.redirect("/login");
-    return;
-  }
-
-  res.send(`Hello ${user.name}`);
+function getDashboard(req: Request, res: Response) {
+  res.send(`Hello ${(req as any).user.name}`);
 }
 
-async function getProfile(req: Request, res: Response) {}
+function getProfile(req: Request, res: Response) {
+  res.send(
+    `Hello ${(req as any).user.name}, your id is: ${(req as any).user.sub}`,
+  );
+}
 
 export default {
   homePage,
