@@ -3,9 +3,9 @@ import bcrypt from "bcrypt";
 
 import queries from "../db/queries.js";
 import createJWT from "../auth/createJWT.js";
-import decodeJWT from "../auth/decodeJWT.js";
 
 function homePage(req: Request, res: Response) {
+  console.log("inside home");
   res.render("index");
 }
 
@@ -54,6 +54,11 @@ function getProfile(req: Request, res: Response) {
   );
 }
 
+function logout(req: Request, res: Response) {
+  res.clearCookie("token");
+  res.redirect("/");
+}
+
 export default {
   homePage,
   getLogin,
@@ -62,4 +67,5 @@ export default {
   postRegister,
   getDashboard,
   getProfile,
+  logout,
 };

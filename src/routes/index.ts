@@ -14,4 +14,6 @@ router.post("/register", controller.postRegister);
 router.get("/dashboard", authenticate, controller.getDashboard);
 router.get("/profile", authenticate, controller.getProfile);
 
+router.get("/logout", controller.logout);
+
 export default router;
